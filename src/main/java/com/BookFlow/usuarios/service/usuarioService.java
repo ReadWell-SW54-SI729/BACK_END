@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public class usuarioService {
+
     @Autowired
     private usuarioRepository usuarioRepository;
 
@@ -21,19 +22,15 @@ public class usuarioService {
         return usuarioRepository.findById(id);
     }
 
+    public Optional<usuario> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
     public usuario save(usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
     public void deleteById(Long id) {
         usuarioRepository.deleteById(id);
-    }
-
-    public Optional<usuario> findByEmail(String email) {
-        return usuarioRepository.findByEmail(email);
-    }
-
-    public boolean emailExists(String email) {
-        return usuarioRepository.findByEmail(email).isPresent();
     }
 }

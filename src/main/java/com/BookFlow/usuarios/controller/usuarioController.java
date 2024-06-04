@@ -28,12 +28,13 @@ public class usuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUsuario(@RequestBody usuario usuario) {
-        if (usuarioService.emailExists(usuario.getEmail())) {
-            return ResponseEntity.status(400).body("Email already registered");
+    public ResponseEntity<String> createUsuario(@RequestBody usuario usuario) {
+        Optional<usuario> existingUsuario = usuarioService.findByEmail(usuario.getEmail());
+        if (existingUsuario.isPresent()) {
+            return ResponseEntity.badRequest().body("El email ya está registrado");
         }
-        usuario savedUsuario = usuarioService.save(usuario);
-        return ResponseEntity.ok(savedUsuario);
+        usuarioService.save(usuario);
+        return ResponseEntity.ok("Usuario creado exitosamente");
     }
 
     @PutMapping("/{id}")
