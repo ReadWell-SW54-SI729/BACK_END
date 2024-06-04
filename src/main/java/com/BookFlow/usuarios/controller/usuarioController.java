@@ -49,7 +49,4 @@ public class usuarioController {
         usuarioRepository.save(usuario);
         return ResponseEntity.ok("Usuario creado exitosamente");
     }
-
-
-
 }
