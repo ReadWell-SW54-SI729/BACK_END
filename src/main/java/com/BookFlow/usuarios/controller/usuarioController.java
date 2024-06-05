@@ -2,6 +2,7 @@ package com.BookFlow.usuarios.controller;
 
 import com.BookFlow.usuarios.domain.usuario;
 import com.BookFlow.usuarios.service.usuarioService;
+import com.BookFlow.usuarios.dto.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,5 +57,11 @@ public class usuarioController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<usuario> login(@RequestBody LoginRequest loginRequest) {
+        Optional<usuario> usuario = usuarioService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
+        return usuario.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.status(401).build());
     }
 }
