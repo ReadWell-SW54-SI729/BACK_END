@@ -33,4 +33,8 @@ public class usuarioService {
     public Optional<usuario> authenticate(String email, String password) {
         return usuarioRepository.findByEmailAndPassword(email, password);
     }
+
+    public Optional<usuario> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
 }

@@ -29,9 +29,16 @@ public class usuarioController {
     }
 
     @PostMapping
-    public usuario createUsuario(@RequestBody usuario usuario) {
-        return usuarioService.save(usuario);
+    public ResponseEntity<String> createUsuario(@RequestBody usuario usuario) {
+        Optional<usuario> existingUsuario = usuarioService.findByEmail(usuario.getEmail());
+        if (existingUsuario.isPresent()) {
+            return ResponseEntity.badRequest().body("El email ya está registrado");
+        }
+        usuarioService.save(usuario);
+        return ResponseEntity.ok("Usuario creado exitosamente");
     }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<usuario> updateUsuario(@PathVariable Long id, @RequestBody usuario usuarioDetails) {
