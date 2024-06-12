@@ -1,6 +1,7 @@
 package com.BookFlow.usuarios.dto;
 
 public class LoginRequest {
+    /*A*/
     private String email;
     private String password;
 
