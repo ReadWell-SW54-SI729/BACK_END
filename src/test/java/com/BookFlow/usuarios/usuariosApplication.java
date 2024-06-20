@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class usuariosApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(usuariosApplication.class, args);
+		SpringApplication.run(com.BookFlow.usuariosApplication.class, args);
 	}
 }
