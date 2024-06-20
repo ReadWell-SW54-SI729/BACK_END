@@ -9,9 +9,9 @@ import lombok.Getter;
 
 @Entity
 
-public class Book {
+public class Book  {
     @Id
-    @NotNull
+    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
 
@@ -19,10 +19,8 @@ public class Book {
     @Column
     private BookName bookTitle;
 
-
     @ManyToOne
     @JoinColumn(name = "genre_id")
-    @NotNull(message = "GenreId is mandatory")
     private Genre bookGenreId;
 
     @Getter
