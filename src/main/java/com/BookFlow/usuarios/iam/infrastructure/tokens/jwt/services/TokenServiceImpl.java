@@ -46,10 +46,10 @@ public class TokenServiceImpl implements BearerTokenService {
         return buildTokenWithDefaultParameters(authentication.getName());
     }
 
-    @Override
     public String generateToken(String username) {
         return buildTokenWithDefaultParameters(username);
     }
+
 
     @Override
     public boolean validateToken(String token) {
@@ -92,6 +92,7 @@ public class TokenServiceImpl implements BearerTokenService {
                 .compact();
     }
 
+
     private SecretKey getSigningKey() {
         byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
@@ -125,5 +126,4 @@ public class TokenServiceImpl implements BearerTokenService {
     private String getAuthorizationParameterFrom(HttpServletRequest request) {
         return request.getHeader(AUTHORIZATION_PARAMETER_NAME);
     }
-
 }

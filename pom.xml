@@ -14,7 +14,7 @@
 	<name>services</name>
 	<description>Learning Center</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>22</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -99,7 +99,16 @@
 					</excludes>
 				</configuration>
 			</plugin>
-		</plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>22</source>
+                    <target>22</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
 	</build>
 
 </project>
