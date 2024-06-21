@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,8 +39,6 @@ public class usuarioController {
         return ResponseEntity.ok("Usuario creado exitosamente");
     }
 
-
-
     @PutMapping("/{id}")
     public ResponseEntity<usuario> updateUsuario(@PathVariable Long id, @RequestBody usuario usuarioDetails) {
         Optional<usuario> usuario = usuarioService.findById(id);
@@ -61,6 +60,39 @@ public class usuarioController {
         if (usuarioService.findById(id).isPresent()) {
             usuarioService.deleteById(id);
             return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<usuario> partiallyUpdateUsuario(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Optional<usuario> usuarioOptional = usuarioService.findById(id);
+        if (usuarioOptional.isPresent()) {
+            usuario usuario = usuarioOptional.get();
+            updates.forEach((k, v) -> {
+                switch (k) {
+                    case "firstname":
+                        usuario.setFirstname((String) v);
+                        break;
+                    case "lastname":
+                        usuario.setLastname((String) v);
+                        break;
+                    case "email":
+                        if (!usuario.getEmail().equals(v) && usuarioService.findByEmail((String) v).isPresent()) {
+                            throw new IllegalArgumentException("El email ya está registrado");
+                        }
+                        usuario.setEmail((String) v);
+                        break;
+                    case "password":
+                        usuario.setPassword((String) v);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Campo no permitido para actualización: " + k);
+                }
+            });
+            usuario updatedUsuario = usuarioService.save(usuario);
+            return ResponseEntity.ok(updatedUsuario);
         } else {
             return ResponseEntity.notFound().build();
         }
