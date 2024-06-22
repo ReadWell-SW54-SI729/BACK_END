@@ -27,7 +27,8 @@ public class OpenApiConfiguration {
                         .description("Book Flow Wiki Documentation")
                         .url("https://acme-learning-platform.wiki.github.io/docs"));
         // Add Security Scheme
-        final String securitySchemeName = "JoaquinRivadeneyraRamosRamos+123";
+
+        final String securitySchemeName = "bearerAuth";
         openApi.addSecurityItem(new SecurityRequirement()
                 .addList(securitySchemeName))
                 .components(new Components()

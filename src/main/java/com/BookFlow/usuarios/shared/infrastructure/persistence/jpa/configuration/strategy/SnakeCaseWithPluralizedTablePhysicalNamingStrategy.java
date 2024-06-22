@@ -12,7 +12,6 @@ public class SnakeCaseWithPluralizedTablePhysicalNamingStrategy implements Physi
         return this.toSnakeCase(logicalName);
     }
 
-    
     @Override
     public Identifier toPhysicalSchemaName(Identifier logicalName, JdbcEnvironment jdbcEnvironment) {
         return this.toSnakeCase(logicalName);
