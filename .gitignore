@@ -28,4 +28,4 @@ build/
 
 ### VS Code ###
 .vscode/
-target/classes/com/BookFlow/usuarios/shared/infrastructure/persistence/jpa/configuration/strategy/SnakeCaseWithPluralizedTablePhysicalNamingStrategy.class
+target/
