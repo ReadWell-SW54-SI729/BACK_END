@@ -1,2 +1,4 @@
-package com.BookFlow.TransactionService.domain.model.queries;public class GetPaymentMethodByIdQuery {
+package com.BookFlow.TransactionService.domain.model.queries;
+
+public record GetPaymentMethodByIdQuery(Long id) {
 }

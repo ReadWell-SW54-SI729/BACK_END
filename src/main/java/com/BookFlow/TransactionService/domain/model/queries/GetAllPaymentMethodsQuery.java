@@ -1,2 +1,4 @@
-package com.BookFlow.TransactionService.domain.model.queries;public class GetAllPaymentMethodsQuery {
+package com.BookFlow.TransactionService.domain.model.queries;
+
+public record GetAllPaymentMethodsQuery() {
 }

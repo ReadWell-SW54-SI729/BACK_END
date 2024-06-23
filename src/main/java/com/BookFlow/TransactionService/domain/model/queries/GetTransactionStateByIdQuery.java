@@ -1,2 +1,4 @@
-package com.BookFlow.TransactionService.domain.model.queries;public class GetTransactionStateByIdQuery {
+package com.BookFlow.TransactionService.domain.model.queries;
+
+public record GetTransactionStateByIdQuery(Long id) {
 }
