@@ -1,7 +1,5 @@
 package com.BookFlow.CatalogueService.interfaces.rest.resources;
 
-import com.BookFlow.CatalogueService.domain.model.valueobjects.BookName;
-
 public record BookResource(
 
     Long bookId,

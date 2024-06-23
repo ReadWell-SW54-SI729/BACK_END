@@ -1,7 +1,6 @@
 package com.BookFlow.CatalogueService.domain.model.aggregates;
 
 import com.BookFlow.CatalogueService.domain.model.commands.CreateBookCommand;
-import com.BookFlow.CatalogueService.domain.model.valueobjects.BookName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,9 +14,8 @@ public class Book  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
 
-    @Embedded
     @Column
-    private BookName bookTitle;
+    private String bookTitle;
 
     @ManyToOne
     @JoinColumn(name = "genre_id")
@@ -47,7 +45,18 @@ public class Book  {
     private String bookRank;
 
     public Book(String bookTitle, Long bookGenreId, String bookImage, String bookDescription, String bookAuthor, String bookAuthorImage, String bookPublisher, String bookRank) {
-        this.bookTitle = new BookName(bookTitle);
+        this.bookTitle = bookTitle;
+        this.bookGenreId = new Genre(bookGenreId,"");
+        this.bookImage = bookImage;
+        this.bookDescription = bookDescription;
+        this.bookAuthor = bookAuthor;
+        this.bookAuthorImage = bookAuthorImage;
+        this.bookPublisher = bookPublisher;
+        this.bookRank = bookRank;
+    }
+    public Book(Long bookId,String bookTitle, Long bookGenreId, String bookImage, String bookDescription, String bookAuthor, String bookAuthorImage, String bookPublisher, String bookRank) {
+        this.bookId = bookId;
+        this.bookTitle = bookTitle;
         this.bookGenreId = new Genre(bookGenreId,"");
         this.bookImage = bookImage;
         this.bookDescription = bookDescription;
@@ -57,7 +66,7 @@ public class Book  {
         this.bookRank = bookRank;
     }
     public Book(CreateBookCommand command, Genre genre){
-       bookTitle = new BookName(command.bookTitle());
+       bookTitle = command.bookTitle();
        bookGenreId = genre;
        bookImage = command.bookImage();
        bookDescription = command.bookDescription();
@@ -79,7 +88,7 @@ public class Book  {
         return bookGenreId;
     }
     public String getBookName(){
-        return bookTitle.bookTitle();
+        return bookTitle;
     }
 
     public Long getBookId() {

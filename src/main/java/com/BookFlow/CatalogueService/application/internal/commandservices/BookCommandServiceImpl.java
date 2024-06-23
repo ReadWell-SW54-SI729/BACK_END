@@ -4,7 +4,6 @@ import com.BookFlow.CatalogueService.domain.exceptions.GenreNotFoundException;
 import com.BookFlow.CatalogueService.domain.model.aggregates.Book;
 import com.BookFlow.CatalogueService.domain.model.aggregates.Genre;
 import com.BookFlow.CatalogueService.domain.model.commands.CreateBookCommand;
-import com.BookFlow.CatalogueService.domain.model.valueobjects.BookName;
 import com.BookFlow.CatalogueService.domain.services.BookCommandService;
 import com.BookFlow.CatalogueService.infrastructure.persistence.jpa.repositories.BookRepository;
 import com.BookFlow.CatalogueService.infrastructure.persistence.jpa.repositories.GenreRepository;
@@ -26,8 +25,7 @@ public class BookCommandServiceImpl implements BookCommandService{
     public Optional<Book>handle(CreateBookCommand command){
         Genre genre = genreRepository.findById(command.bookGenreId()).orElseThrow(() -> new GenreNotFoundException(command.bookGenreId()));
 
-        var bookTitle = new BookName(command.bookTitle());
-        bookRepository.findByBookTitle(bookTitle).ifPresent(book ->{
+        bookRepository.findByBookTitle(command.bookTitle()).ifPresent(book ->{
             throw new IllegalArgumentException("Book with name already exists");
         });
 

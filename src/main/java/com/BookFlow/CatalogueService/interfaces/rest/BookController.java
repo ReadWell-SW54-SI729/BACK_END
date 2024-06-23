@@ -3,7 +3,6 @@ package com.BookFlow.CatalogueService.interfaces.rest;
 import com.BookFlow.CatalogueService.domain.model.queries.GetAllBooksQuery;
 import com.BookFlow.CatalogueService.domain.model.queries.GetBookByIdQuery;
 import com.BookFlow.CatalogueService.domain.model.queries.GetBookByNameQuery;
-import com.BookFlow.CatalogueService.domain.model.valueobjects.BookName;
 import com.BookFlow.CatalogueService.domain.services.BookCommandService;
 import com.BookFlow.CatalogueService.domain.services.BookQueryService;
 import com.BookFlow.CatalogueService.interfaces.rest.resources.BookResource;
@@ -48,8 +47,7 @@ public class BookController {
     }
     @GetMapping("/bookTittle/{name}")
     public ResponseEntity<BookResource> getBookByName(@PathVariable String name) {
-        var nameBook = new BookName(name);
-        var getBookByNameQuery = new GetBookByNameQuery(nameBook);
+        var getBookByNameQuery = new GetBookByNameQuery(name);
         var book = bookQueryService.handle(getBookByNameQuery);
         if (book.isEmpty()) return ResponseEntity.badRequest().build();
         var bookResource = BookResourceFromEntityAssembler.toResourceFromEntity(book.get());
