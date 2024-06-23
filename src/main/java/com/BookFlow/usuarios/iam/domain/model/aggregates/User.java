@@ -1,7 +1,7 @@
 package com.BookFlow.usuarios.iam.domain.model.aggregates;
 
 import com.BookFlow.usuarios.iam.domain.model.entities.Role;
-import com.BookFlow.usuarios.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+import com.BookFlow.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
