@@ -71,9 +71,10 @@ public class WebSecurityConfiguration {
         // CORS default configuration
         http.cors(configurer -> configurer.configurationSource( _ -> {
             var cors = new CorsConfiguration();
-            cors.setAllowedOrigins(List.of("*"));
+            cors.setAllowedOriginPatterns(List.of("*"));
             cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
             cors.setAllowedHeaders(List.of("*"));
+            cors.setAllowCredentials(true); // Permitir credenciales si es necesario
             return cors;
         }));
         http.csrf(csrfConfigurer -> csrfConfigurer.disable())
