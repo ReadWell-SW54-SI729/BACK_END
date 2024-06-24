@@ -28,7 +28,6 @@ public class BearerAuthorizationRequestFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
-
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
@@ -39,10 +38,9 @@ public class BearerAuthorizationRequestFilter extends OncePerRequestFilter {
                 var userDetails = userDetailsService.loadUserByUsername(username);
                 SecurityContextHolder.getContext()
                         .setAuthentication(UsernamePasswordAuthenticationTokenBuilder
-                                .build(userDetails,request));
+                                .build(userDetails, request));
             } else {
                 LOGGER.warn("Token is not valid or not present in the request.");
-
             }
         } catch (Exception e) {
             LOGGER.error("Cannot set user authentication: {}", e.getMessage());

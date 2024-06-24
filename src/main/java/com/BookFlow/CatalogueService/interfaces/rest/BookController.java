@@ -1,6 +1,7 @@
 package com.BookFlow.CatalogueService.interfaces.rest;
 
 import com.BookFlow.CatalogueService.domain.model.queries.GetAllBooksQuery;
+import com.BookFlow.CatalogueService.domain.model.queries.GetBookByGenreQuery;
 import com.BookFlow.CatalogueService.domain.model.queries.GetBookByIdQuery;
 import com.BookFlow.CatalogueService.domain.model.queries.GetBookByNameQuery;
 import com.BookFlow.CatalogueService.domain.services.BookCommandService;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,14 +47,24 @@ public class BookController {
         var bookResource = BookResourceFromEntityAssembler.toResourceFromEntity(book.get());
         return ResponseEntity.ok(bookResource);
     }
-    @GetMapping("/bookTittle/{name}")
-    public ResponseEntity<BookResource> getBookByName(@PathVariable String name) {
-        var getBookByNameQuery = new GetBookByNameQuery(name);
-        var book = bookQueryService.handle(getBookByNameQuery);
-        if (book.isEmpty()) return ResponseEntity.badRequest().build();
-        var bookResource = BookResourceFromEntityAssembler.toResourceFromEntity(book.get());
-        return ResponseEntity.ok(bookResource);
+
+    @GetMapping("/bookTitle")
+    public ResponseEntity<List<BookResource>> getBooksByName(@RequestParam String bookTitle) {
+        var getBookByNameQuery = new GetBookByNameQuery(bookTitle);
+        var books = bookQueryService.handle(getBookByNameQuery);
+        if (books.isEmpty()) return ResponseEntity.badRequest().build();
+        var bookResources = books.stream().map(BookResourceFromEntityAssembler::toResourceFromEntity).collect(Collectors.toList());
+        return ResponseEntity.ok(bookResources);
     }
+    @GetMapping("/bookGenre")
+    public ResponseEntity<List<BookResource>> getBooksByGenre(@RequestParam String genreName) {
+        var getBookByGenreQuery = new GetBookByGenreQuery(genreName);
+        var books = bookQueryService.handle(getBookByGenreQuery);
+        if (books.isEmpty()) return ResponseEntity.badRequest().build();
+        var bookResources = books.stream().map(BookResourceFromEntityAssembler::toResourceFromEntity).collect(Collectors.toList());
+        return ResponseEntity.ok(bookResources);
+    }
+
     @GetMapping
     public ResponseEntity<List<BookResource>> getAllBooks(){
         var getBooksQuery = new GetAllBooksQuery();

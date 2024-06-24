@@ -1,10 +1,13 @@
 package com.BookFlow.CatalogueService.domain.model.aggregates;
 
 import com.BookFlow.CatalogueService.domain.model.commands.CreateBookCommand;
+import com.BookFlow.usuarios.clubs.domain.model.aggregates.Comment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+
+import java.util.List;
 
 @Entity
 
@@ -17,7 +20,7 @@ public class Book  {
     @Column
     private String bookTitle;
 
-    @ManyToOne
+    @ManyToOne // Relación muchos a uno de Book a Genre eso quiere decir que un libro pertenece a un género
     @JoinColumn(name = "genre_id")
     private Genre bookGenreId;
 
@@ -43,7 +46,11 @@ public class Book  {
     @NotNull
     @Column
     private String bookRank;
-
+/*
+    @OneToMany
+    @JoinColumn(name = "comment_id")
+    private List<Comment> commentId;
+*/
     public Book(String bookTitle, Long bookGenreId, String bookImage, String bookDescription, String bookAuthor, String bookAuthorImage, String bookPublisher, String bookRank) {
         this.bookTitle = bookTitle;
         this.bookGenreId = new Genre(bookGenreId,"");
@@ -53,6 +60,7 @@ public class Book  {
         this.bookAuthorImage = bookAuthorImage;
         this.bookPublisher = bookPublisher;
         this.bookRank = bookRank;
+     //   this.commentId = List.of(new Comment(commentId,""));
     }
     public Book(Long bookId,String bookTitle, Long bookGenreId, String bookImage, String bookDescription, String bookAuthor, String bookAuthorImage, String bookPublisher, String bookRank) {
         this.bookId = bookId;
@@ -64,6 +72,7 @@ public class Book  {
         this.bookAuthorImage = bookAuthorImage;
         this.bookPublisher = bookPublisher;
         this.bookRank = bookRank;
+     //   this.commentId = List.of(new Comment(commentId,""));
     }
     public Book(CreateBookCommand command, Genre genre){
        bookTitle = command.bookTitle();
@@ -74,6 +83,8 @@ public class Book  {
        bookAuthorImage = command.bookAuthorImage();
        bookPublisher = command.bookPublisher();
        bookRank = command.bookRank();
+   //    commentId = List.of(comment);
+
     }
     public Book() {
         this.bookImage = "";

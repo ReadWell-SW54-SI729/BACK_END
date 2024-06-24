@@ -10,7 +10,7 @@ import lombok.Getter;
 @Getter
 public class Comment {
     @Id
-    @NotNull
+    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
@@ -20,6 +20,9 @@ public class Comment {
 
     public Comment(Long commentId, String content) {
         this.commentId = commentId;
+        this.name = content;
+    }
+    public Comment( String content) {
         this.name = content;
     }
     public Comment(CreateCommentCommand command) {

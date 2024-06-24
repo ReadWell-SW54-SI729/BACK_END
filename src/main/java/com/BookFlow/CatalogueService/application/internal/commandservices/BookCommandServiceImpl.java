@@ -7,6 +7,7 @@ import com.BookFlow.CatalogueService.domain.model.commands.CreateBookCommand;
 import com.BookFlow.CatalogueService.domain.services.BookCommandService;
 import com.BookFlow.CatalogueService.infrastructure.persistence.jpa.repositories.BookRepository;
 import com.BookFlow.CatalogueService.infrastructure.persistence.jpa.repositories.GenreRepository;
+import com.BookFlow.usuarios.clubs.domain.model.aggregates.Comment;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,7 +25,7 @@ public class BookCommandServiceImpl implements BookCommandService{
     @Override
     public Optional<Book>handle(CreateBookCommand command){
         Genre genre = genreRepository.findById(command.bookGenreId()).orElseThrow(() -> new GenreNotFoundException(command.bookGenreId()));
-
+        //Comment comment = new Comment(command.commentId());
         bookRepository.findByBookTitle(command.bookTitle()).ifPresent(book ->{
             throw new IllegalArgumentException("Book with name already exists");
         });

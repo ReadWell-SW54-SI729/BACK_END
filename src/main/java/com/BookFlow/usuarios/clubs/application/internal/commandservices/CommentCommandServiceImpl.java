@@ -22,7 +22,7 @@ public class CommentCommandServiceImpl implements CommentCommandService {
             throw new IllegalArgumentException("Comment with content already exists");
         });
 
-        Comment newComment = new Comment(command);
+        var newComment = new Comment(command);
         commentRepository.save(newComment);
         return Optional.of(newComment);
     }

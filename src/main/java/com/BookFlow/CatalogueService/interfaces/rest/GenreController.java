@@ -44,8 +44,8 @@ public class GenreController {
         var genreResource = GenreResourceFromEntityAssembler.toResourceFromEntity(genre.get());
         return ResponseEntity.ok(genreResource);
     }
-    @GetMapping("/genreName/{name}")
-    public ResponseEntity<GenreResource> getGenreByName(@PathVariable String name) {
+    @GetMapping("/genreName")
+    public ResponseEntity<GenreResource> getGenreByName(@RequestParam String name) {
         var getGenreByNameQuery = new GetGenreByNameQuery(name);
         var genre = genreQueryService.handle(getGenreByNameQuery);
         if (genre.isEmpty()) return ResponseEntity.badRequest().build();

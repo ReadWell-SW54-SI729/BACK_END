@@ -43,6 +43,7 @@ public class User extends AuditableAbstractAggregateRoot<User> {
         addRoles(roles);
     }
 
+
     public User addRole(Role role) {
         this.roles.add(role);
         return this;
